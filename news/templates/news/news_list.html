@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+    뉴스 :: {{ request.GET.query }}
+{% endblock %}
+{% block content %}
+    <form action="{% url 'news:news_list' %}" method="GET">
+        {{ form.as_table }}
+        {% csrf_token %}
+        <input type="submit" value="검색"/>
+    </form>
+    <ul>
+    <li><a href="?query={{ request.GET.query }}">전체</a></li>
+    {% for type in sids %}
+        <li><a href="?sid={{ type.0 }}&query={{ request.GET.query }}">{{ type.1 }}</a></li>
+    {% endfor %}
+    </ul>
+    <h1>News List
+        {% if request.GET.query %} :: "{{ request.GET.query }}"{% endif %}
+        | 총 {{ page_obj.paginator.count }}건</h1>
+    <ul>
+        {% for news in news_list %}
+            <div class="list_item">
+                <h3><a href="{{ news.url }}" target="_blank">{{ news.title }}</a></h3>
+                <span>{{ news.author }} | {{ news.create_time }}</span>
+            </div>
+        {% empty %}
+            <p>뉴스가 존재하지 않습니다.</p>
+        {% endfor %}
+    </ul>
+    <br/>
+
+    <!-- paging link -->
+    <div>
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&sid={{ request.GET.sid }}&query={{ request.GET.query }}">&lt;&lt;Prev</a>
+        {% endif %}
+        페이지 {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&sid={{ request.GET.sid }}&query={{ request.GET.query }}">Next&gt;&gt;</a>
+        {% endif %}
+    </div>
+{% endblock %}

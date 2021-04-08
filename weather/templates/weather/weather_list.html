@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}날씨{% endblock %}
+{% block content %}
+    <form action="{% url 'weather:weather_list' %}" method="post">
+        {{ form.as_table }}
+        {% csrf_token %}
+        <input type="submit" value="검색"/>
+    </form>
+    <p>{{ message }}</p>
+    <ul>
+        {% for nowweather in nowweather_list %}
+            <li><a href="{% url 'weather:weather_detail' pk=nowweather.pk %}">{{ nowweather.name }}</a>
+                | {{ nowweather.get_local_time }}<br>
+                <p>{{ nowweather.coord }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+{% block footer %}
+{% endblock %}

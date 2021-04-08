@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+    주식 검색
+{% endblock %}
+{% block content %}
+    <form action="{% url 'stock:stock_list' %}" method="POST">
+        {{ form.as_table }}
+        {% csrf_token %}
+        <input type="submit" value="검색"/>
+    </form>
+    <div>
+        {% if searched %}
+            <p>검색결과: </p>
+            {% if searched_stock %}
+                <p>{{ searched_stock }}</p>
+            {% elif stock %}
+                <p>검색 실패</p>
+            {% endif %}
+        {% endif %}
+        <br>
+    </div>
+    <div><ul>
+        {% for stock in stock_list %}
+            <li class="list-item"><a href="{% url 'stock:stock_update' %}?url={{ stock.url }}">{{ stock }}</a></li>
+        {% endfor %}
+    </ul>
+    </div>
+    <script>
+
+    </script>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>{% block title %}Django Web Programming{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'css/base.css' %}{% endblock %}"/>
+    <link rel="stylesheet" type="text/css" href="{% block extrastyle %}{% endblock %}"/>
+
+</head>
+
+<body>
+
+<div id="header">
+    <h2 class="maintitle">Easy&amp;Fast Django Web Programming</h2>
+    <h4 class="welcome">Welcome, <a href="#">OOO</a> /
+        <a href="#">Change Password</a> /
+        <a href="#">Logout</a>
+    </h4>
+</div>
+
+<div id="menu">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'news:news_list' %}">News&bigtriangledown;</a>
+        <ul>
+            <li><a href="{% url 'news:news_list' %}">news</a></li>
+            <li><a href="{% url 'restapi:news_list' %}">news api</a></li>
+            <li><a href="{% url 'news:news_crawl' %}">news update</a></li>
+        </ul>
+    </li>
+    <li><a href="{% url 'stock:stock_list' %}">Stock</a>
+        <ul>
+            <li><a href="{% url 'stock:stock_list' %}">stock</a>
+            <li><a href="{% url 'restapi:stock_list' %}">stock api</a></li>
+        </ul>
+    </li>
+    <li><a href="{% url 'weather:weather_list' %}">Weather</a>
+        <ul>
+            <li><a href="{% url 'weather:weather_list' %}">weather</a>
+            <li><a href="{% url 'restapi:weather_list' %}">weather api</a></li>
+        </ul>
+    </li>
+    </li>
+</div>
+
+{% block content %}
+    <div id="content">
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <div id="footer">
+
+    </div>
+{% endblock %}
+
+</body>
+</html>

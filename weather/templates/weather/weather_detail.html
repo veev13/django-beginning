@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}날씨 :: {{ now_weather.name }}{% endblock %}
+{% block content %}
+    <div>
+        {{ now_weather.name }} | 측정 시간: {{ now_weather.get_local_time }}<br>
+        <p>{{ now_weather.coord }}</p>
+        {% for weather in now_weather.weather_list.all %}
+            <p><img src="http://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="weather"/>: {{ weather }}</p>
+        {% endfor %}
+        <p>{{ now_weather.main|linebreaks }}</p>
+    </div>
+    <div>
+    일기예보:
+    <ul>
+    {% for day in predict_weather.daily.all %}
+        <li>
+        <p>예측시간: {{ day.get_local_time }}</p>
+        {% for weather in day.weather_list.all %}
+            <p><img src="http://openweathermap.org/img/wn/{{weather.icon}}@2x.png" alt="weather"/>: {{ weather }}</p>
+        {% endfor %}
+        </li>
+    {% endfor %}
+    </ul>
+    </div>
+{% endblock %}
+{% block footer %}
+{% endblock %}
